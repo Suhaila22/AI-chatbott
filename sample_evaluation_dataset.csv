@@ -1,0 +1,5 @@
+question,expected_answer
+What is RAG?,RAG means Retrieval-Augmented Generation. It retrieves relevant knowledge-base content and uses it to generate grounded answers.
+What is human escalation?,Human escalation means transferring unresolved or sensitive chatbot questions to a human reviewer or responsible department.
+ما هو الهدف من الشات بوت؟,الهدف من الشات بوت هو مساعدة المستخدمين في الحصول على إجابات سريعة من قاعدة المعرفة وتصعيد الحالات المعقدة للمراجعة البشرية.
+ما معنى RAG؟,RAG يعني التوليد المعزز بالاسترجاع حيث يتم استرجاع معلومات من قاعدة المعرفة ثم استخدامها لتوليد إجابة دقيقة.

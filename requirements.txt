@@ -1,0 +1,10 @@
+streamlit
+ollama
+pypdf
+python-docx
+pandas
+numpy
+bcrypt
+langdetect
+scikit-learn
+requests

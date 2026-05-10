@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Zero to Enterprise AI Chatbot | Deep Tech Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@300;400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f6f2eb;
+    --accent: #c0392b;
+    --accent2: #1a3a5c;
+    --gold: #b8860b;
+    --code-bg: #1a1a2e;
+    --code-text: #e0e0ff;
+    --muted: #6b6560;
+    --rule: #d4c9b8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 14px 24px 10px;
+    letter-spacing: 0.25em;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    border-bottom: 3px solid var(--accent);
+  }
+  .masthead span { color: var(--accent); margin: 0 8px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.04) 39px,
+      rgba(255,255,255,0.04) 40px
+    );
+  }
+  .hero-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #e8c57a;
+  }
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(246,242,235,0.55);
+    letter-spacing: 0.1em;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+  .hero-meta strong { color: var(--paper); }
+
+  /* ── TOC ── */
+  .toc-wrapper {
+    max-width: 820px;
+    margin: 60px auto;
+    padding: 0 40px;
+  }
+  .toc {
+    border: 2px solid var(--ink);
+    padding: 28px 36px;
+    background: #fff;
+    position: relative;
+  }
+  .toc::before {
+    content: '§ TABLE OF CONTENTS';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 12px;
+    position: absolute;
+    top: -14px;
+    left: 20px;
+  }
+  .toc ol {
+    padding-left: 22px;
+    counter-reset: none;
+  }
+  .toc li { margin: 6px 0; }
+  .toc a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    border-bottom: 1px dashed var(--rule);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); border-color: var(--accent); }
+  .toc .toc-num { color: var(--accent); margin-right: 8px; }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    margin-top: 72px;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 3px double var(--rule);
+  }
+  .section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 40px 0 14px;
+    color: var(--accent2);
+  }
+
+  /* ── BODY TEXT ── */
+  p { margin-bottom: 20px; }
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  /* ── INTRO LEAD ── */
+  .lead {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #3a3530;
+    line-height: 1.8;
+    border-left: 4px solid var(--accent);
+    padding: 4px 0 4px 20px;
+    margin-bottom: 32px;
+  }
+
+  /* ── PULLQUOTE ── */
+  .pullquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-style: italic;
+    text-align: center;
+    padding: 36px 40px;
+    margin: 48px 0;
+    border-top: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+    color: var(--accent2);
+    line-height: 1.5;
+    position: relative;
+  }
+  .pullquote::before {
+    content: '\201C';
+    font-size: 5rem;
+    line-height: 0;
+    vertical-align: -0.55em;
+    color: var(--rule);
+    margin-right: 8px;
+  }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 24px 28px;
+    margin: 28px 0;
+    overflow-x: auto;
+    border-left: 3px solid var(--accent);
+    position: relative;
+  }
+  .code-block .lang-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 3px 10px;
+    text-transform: uppercase;
+  }
+  .kw { color: #ff79c6; }
+  .fn { color: #50fa7b; }
+  .str { color: #f1fa8c; }
+  .cm { color: #6272a4; font-style: italic; }
+  .var { color: #bd93f9; }
+  .num { color: #ffb86c; }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    margin: 48px 0;
+    position: relative;
+    padding-left: 0;
+  }
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 0 24px;
+    margin-bottom: 0;
+  }
+  .roadmap-item:not(:last-child) .rm-line { border-left: 2px solid var(--rule); }
+  .rm-node-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .rm-node {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 3px solid var(--ink);
+    transition: background 0.2s;
+  }
+  .rm-node.phase-1 { background: var(--accent); border-color: var(--accent); }
+  .rm-node.phase-2 { background: var(--accent2); border-color: var(--accent2); }
+  .rm-node.phase-3 { background: #2c6e2f; border-color: #2c6e2f; }
+  .rm-node.phase-4 { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .rm-node.phase-5 { background: #6b2fa0; border-color: #6b2fa0; }
+  .rm-node.phase-6 { background: #c0392b; border-color: #c0392b; }
+  .rm-line {
+    flex: 1;
+    width: 2px;
+    background: var(--rule);
+    margin: 0 auto;
+  }
+  .rm-content {
+    padding: 6px 0 40px;
+  }
+  .rm-phase {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .rm-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .rm-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #3a3530;
+    margin-bottom: 12px;
+  }
+  .rm-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+  .tag.t-red { background: var(--accent); }
+  .tag.t-blue { background: var(--accent2); }
+  .tag.t-green { background: #2c6e2f; }
+  .tag.t-gold { background: var(--gold); }
+  .tag.t-purple { background: #6b2fa0; }
+
+  /* ── COMPARISON TABLE ── */
+  .table-wrap { overflow-x: auto; margin: 32px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  thead tr { background: var(--ink); color: var(--paper); }
+  thead th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+  }
+  tbody tr:nth-child(odd) { background: rgba(255,255,255,0.7); }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,0.3); }
+  tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tbody td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent2);
+  }
+  .check { color: #2c6e2f; font-weight: 700; }
+  .cross { color: var(--accent); font-weight: 700; }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--accent2);
+    color: var(--paper);
+    padding: 24px 28px;
+    margin: 36px 0;
+    position: relative;
+  }
+  .callout::before {
+    content: '⚡ EXPERT NOTE';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+  .callout p { margin: 0; font-size: 0.95rem; line-height: 1.75; }
+  .callout strong { color: #e8c57a; }
+
+  .callout.warn {
+    background: #fff8e7;
+    border-left: 5px solid var(--gold);
+    color: var(--ink);
+  }
+  .callout.warn::before {
+    content: '⚠ PITFALL WARNING';
+    color: var(--gold);
+  }
+
+  /* ── METRIC CARDS ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .metric-card {
+    border: 2px solid var(--ink);
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+  }
+  .metric-card .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .metric-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .metric-card .sublabel {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ── HR ── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 48px 0;
+  }
+  .ornamental-hr {
+    text-align: center;
+    border: none;
+    margin: 48px 0;
+    color: var(--rule);
+    font-size: 1.2rem;
+    letter-spacing: 8px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(246,242,235,0.5);
+    text-align: center;
+    padding: 32px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  footer strong { color: var(--paper); }
+
+  /* ── INLINE CODE ── */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: #e8e2d8;
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  /* ── LIST STYLE ── */
+  ul.styled, ol.styled {
+    padding-left: 0;
+    list-style: none;
+    margin: 16px 0 20px;
+  }
+  ul.styled li, ol.styled li {
+    padding: 4px 0 4px 22px;
+    position: relative;
+    font-size: 0.97rem;
+  }
+  ul.styled li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  ol.styled { counter-reset: li; }
+  ol.styled li::before {
+    counter-increment: li;
+    content: counter(li) '.';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+    font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .hero, .content, .toc-wrapper { padding-left: 22px; padding-right: 22px; }
+    .hero { padding-top: 50px; padding-bottom: 50px; }
+    .hero-meta { flex-direction: column; gap: 10px; }
+    .pullquote { font-size: 1.15rem; padding: 28px 20px; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  Deep Tech Review<span>◆</span>Advanced AI Engineering<span>◆</span>May 2026
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">// Advanced Engineering Blog · AI Systems</div>
+    <h1>From LLM Primitives to <em>Production-Grade</em><br>Enterprise AI Chatbot</h1>
+    <p style="color:rgba(246,242,235,0.7);font-size:1.05rem;max-width:600px;line-height:1.75;margin-top:18px;">
+      A rigorous, practitioner-level guide covering transformer internals, PEFT fine-tuning, RAG pipelines, deployment architecture, and enterprise-grade security — with a complete six-phase roadmap to build your own AI chatbot from scratch.
+    </p>
+    <div class="hero-meta">
+      <span><strong>Level:</strong> Advanced</span>
+      <span><strong>Reading time:</strong> ~22 min</span>
+      <span><strong>Stack:</strong> Python · LLaMA/Mistral · LangChain · Docker · Kubernetes</span>
+      <span><strong>Based on:</strong> Enterprise AI Training Curriculum, Nov 2025</span>
+    </div>
+  </div>
+</header>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-wrapper">
+  <nav class="toc">
+    <ol>
+      <li><a href="#why-local"><span class="toc-num">01.</span>Why Local, Private AI Chatbots Are the Enterprise Default</a></li>
+      <li><a href="#transformer"><span class="toc-num">02.</span>Under the Hood: Transformer Architecture & Attention</a></li>
+      <li><a href="#models"><span class="toc-num">03.</span>Choosing Your Backbone: LLaMA, Mistral, Falcon</a></li>
+      <li><a href="#data"><span class="toc-num">04.</span>Data Engineering for Fine-Tuning</a></li>
+      <li><a href="#peft"><span class="toc-num">05.</span>PEFT: LoRA & QLoRA — Fine-Tuning Without a Supercomputer</a></li>
+      <li><a href="#rag"><span class="toc-num">06.</span>RAG Pipelines: Grounding Your Chatbot in Real Knowledge</a></li>
+      <li><a href="#roadmap"><span class="toc-num">07.</span>The Six-Phase Build Roadmap</a></li>
+      <li><a href="#security"><span class="toc-num">08.</span>Security, RBAC, Compliance, and Maintenance</a></li>
+      <li><a href="#kpis"><span class="toc-num">09.</span>Production KPIs & Evaluation Framework</a></li>
+      <li><a href="#pitfalls"><span class="toc-num">10.</span>Common Pitfalls Engineers Fall Into</a></li>
+    </ol>
+  </nav>
+</div>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- INTRO -->
+  <p class="lead">
+    Building an enterprise AI chatbot is not a prompt-engineering exercise. It is a full-stack systems engineering discipline: you need to understand model internals, data pipelines, fine-tuning mathematics, vector retrieval, API orchestration, container infrastructure, and enterprise security — all at once, and all in production.
+  </p>
+
+  <p>
+    This post distils a rigorous five-day enterprise AI training programme into one dense, practitioner-grade read. It is written for engineers who have already played with ChatGPT wrappers and now need to build something real: a private, fine-tuned, retrieval-augmented, containerised chatbot running on infrastructure their organisation controls.
+  </p>
+  <p>
+    We will move fast and assume you are comfortable with Python, have a conceptual handle on neural networks, and know your way around a Linux terminal. Let us begin.
+  </p>
+
+  <!-- SECTION 1 -->
+  <section class="section" id="why-local">
+    <div class="section-label">// Section 01</div>
+    <h2>Why Local, Private AI Chatbots Are the Enterprise Default</h2>
+
+    <p>
+      The enterprise AI adoption wave is well documented. By 2024, AI adoption across industries reached 72% — up from a mere 20% in 2017 — and 65% of organisations regularly use generative AI in some capacity. But sending your company's proprietary data to a public API endpoint is not a strategy; it is a liability.
+    </p>
+
+    <div class="metrics">
+      <div class="metric-card"><div class="value">72%</div><div class="label">AI Adoption</div><div class="sublabel">2024 — up from 20% in 2017</div></div>
+      <div class="metric-card"><div class="value">65%</div><div class="label">Use Gen AI</div><div class="sublabel">Regularly, per McKinsey 2024</div></div>
+      <div class="metric-card"><div class="value">$15.7T</div><div class="label">Economic Impact</div><div class="sublabel">AI's global contribution by 2030 (PwC)</div></div>
+      <div class="metric-card"><div class="value">14%</div><div class="label">GDP Increase</div><div class="sublabel">Projected global GDP boost</div></div>
+    </div>
+
+    <p>
+      The local deployment model wins on three axes simultaneously: <strong>data sovereignty</strong> (your training corpus and inference logs never leave your infrastructure), <strong>latency predictability</strong> (no round trips to a shared cloud endpoint), and <strong>long-run cost structure</strong> (high CAPEX up front, but near-zero per-query OPEX at scale). For any organisation handling personally identifiable information, proprietary intellectual property, or regulated data under GDPR, HIPAA, or equivalent regimes, local deployment is not optional — it is mandatory.
+    </p>
+
+    <div class="pullquote">
+      The question is no longer whether to build an AI chatbot. The question is whether you control the intelligence layer or outsource it to someone else's cloud.
+    </div>
+  </section>
+
+  <!-- SECTION 2 -->
+  <section class="section" id="transformer">
+    <div class="section-label">// Section 02</div>
+    <h2>Under the Hood: Transformer Architecture & Attention</h2>
+
+    <p>
+      You cannot tune what you do not understand. Every modern enterprise LLM — LLaMA, Mistral, Falcon, GPT variants — is a transformer. The transformer is not magic; it is four stacked components working in concert:
+    </p>
+
+    <h3>The Four Core Components</h3>
+    <ul class="styled">
+      <li><strong>Embedding Layer</strong> — converts discrete tokens into dense continuous vectors of dimensionality <em>d</em> (typically 4096 for a 7B model). This is where language becomes geometry.</li>
+      <li><strong>Positional Encoding</strong> — injects sequence-order information into otherwise order-agnostic embeddings. Without this, "dog bites man" and "man bites dog" would be identical to the model.</li>
+      <li><strong>Self-Attention (Multi-Head)</strong> — the computational heart. Each token generates three vectors: Query (<em>Q</em>), Key (<em>K</em>), and Value (<em>V</em>). Attention scores are computed as softmax(<em>QK<sup>T</sup></em> / √<em>d<sub>k</sub></em>) and used to weight the value vectors. This is what gives transformers their ability to capture long-range dependencies that destroyed earlier RNN architectures.</li>
+      <li><strong>Feed-Forward Network</strong> — a position-wise MLP applied after attention, typically expanding to 4× the model dimension before projecting back. This is where the model's "knowledge" is primarily stored.</li>
+    </ul>
+
+    <div class="code-block">
+      <span class="lang-tag">Python</span>
+<span class="cm"># Self-attention — the mathematical core</span>
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn.functional <span class="kw">as</span> F
+
+<span class="kw">def</span> <span class="fn">scaled_dot_product_attention</span>(Q, K, V, mask=<span class="kw">None</span>):
+    d_k = Q.size(-<span class="num">1</span>)
+    <span class="cm"># Score: how much each query attends to each key</span>
+    scores = torch.matmul(Q, K.transpose(-<span class="num">2</span>, -<span class="num">1</span>)) / (d_k ** <span class="num">0.5</span>)
+    <span class="kw">if</span> mask <span class="kw">is not</span> <span class="kw">None</span>:
+        scores = scores.masked_fill(mask == <span class="num">0</span>, float(<span class="str">'-inf'</span>))
+    weights = F.softmax(scores, dim=-<span class="num">1</span>)
+    <span class="kw">return</span> torch.matmul(weights, V), weights
+    </div>
+
+    <p>
+      <strong>Multi-head attention</strong> runs this mechanism <em>h</em> times in parallel, each head learning to attend to different aspects of the input — syntactic structure, semantic similarity, coreference, factual associations. The outputs are concatenated and projected. This parallel structure is why transformers scale so dramatically with compute: there is no sequential dependency across heads.
+    </p>
+
+    <div class="callout">
+      <p>Understanding self-attention is critical because <strong>LoRA — the dominant fine-tuning technique — specifically targets the query and value projection matrices</strong> of the attention mechanism. If you don't know why those matrices matter, you will tune the wrong things.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section class="section" id="models">
+    <div class="section-label">// Section 03</div>
+    <h2>Choosing Your Backbone: LLaMA, Mistral, Falcon</h2>
+
+    <p>
+      The open-source model ecosystem has matured dramatically. Three families dominate enterprise local deployment:
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Model Family</th>
+            <th>Parameter Sizes</th>
+            <th>Architecture Highlight</th>
+            <th>Best Enterprise Use Case</th>
+            <th>Fine-Tuning Ecosystem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>LLaMA 3 (Meta)</td>
+            <td>7B, 13B, 70B</td>
+            <td>Grouped-query attention; RoPE embeddings</td>
+            <td>General purpose; strong baseline for any domain</td>
+            <td>Richest — most LoRA recipes available</td>
+          </tr>
+          <tr>
+            <td>Mistral 7B</td>
+            <td>7B, Mixtral 8×7B</td>
+            <td>Sliding window attention; sparse MoE in Mixtral</td>
+            <td>Edge devices; resource-constrained deployment</td>
+            <td>Excellent; optimised for efficiency</td>
+          </tr>
+          <tr>
+            <td>Falcon (TII)</td>
+            <td>7B, 40B</td>
+            <td>FlashAttention; multi-query attention</td>
+            <td>Conversational, long-context tasks</td>
+            <td>Good; UAE-origin with Arabic support</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Model Size vs. Hardware Reality</h3>
+    <p>
+      The rule of thumb is <strong>~2 bytes per parameter for float16 inference</strong>. A 7B model needs ~14 GB VRAM at minimum, 13B needs ~26 GB, and a 70B model requires multi-GPU configurations or aggressive quantisation. In practice:
+    </p>
+    <ul class="styled">
+      <li><strong>7B models</strong> — consumer RTX 3090/4090 (24 GB). Sufficient for most business chatbot tasks.</li>
+      <li><strong>13B models</strong> — enterprise single GPU (A100 40 GB) or consumer GPU + QLoRA quantisation.</li>
+      <li><strong>70B models</strong> — A100 80 GB minimum, preferably multi-GPU. Necessary for complex reasoning, legal analysis, medical summarisation.</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 4 -->
+  <section class="section" id="data">
+    <div class="section-label">// Section 04</div>
+    <h2>Data Engineering for Fine-Tuning</h2>
+
+    <p>
+      The model is only as good as the data you feed it. Enterprise fine-tuning data lives in four places: HR and policy documents (SharePoint, Confluence), customer support logs and CRM tickets, product manuals and technical documentation, and structured databases exposed via APIs. The pipeline from raw source to training-ready dataset is non-trivial.
+    </p>
+
+    <h3>The Five-Stage Data Preparation Pipeline</h3>
+
+    <div class="code-block">
+      <span class="lang-tag">Python</span>
+<span class="cm"># Stage 1: Extract — Stage 2: Clean — Stage 3: Structure</span>
+<span class="kw">import</span> re
+<span class="kw">from</span> datasets <span class="kw">import</span> Dataset
+<span class="kw">import</span> json
+
+<span class="kw">def</span> <span class="fn">clean_document</span>(text: str) -> str:
+    text = re.sub(r<span class="str">'&lt;[^&gt;]+&gt;'</span>, <span class="str">''</span>, text)          <span class="cm"># strip HTML</span>
+    text = re.sub(r<span class="str">r'\b[\w.+-]+@[\w-]+\.[a-z]{2,}\b'</span>,
+                  <span class="str">'[REDACTED_EMAIL]'</span>, text)    <span class="cm"># anonymise PII</span>
+    text = re.sub(r<span class="str">r'\s+'</span>, <span class="str">' '</span>, text).strip()     <span class="cm"># normalise whitespace</span>
+    <span class="kw">return</span> text
+
+<span class="kw">def</span> <span class="fn">to_qa_pair</span>(question: str, answer: str) -> dict:
+    <span class="kw">return</span> {
+        <span class="str">"prompt"</span>: question.strip(),
+        <span class="str">"completion"</span>: answer.strip()
+    }
+
+<span class="cm"># Build training corpus</span>
+pairs = [
+    to_qa_pair(<span class="str">"What is our annual leave entitlement?"</span>,
+               <span class="str">"Full-time employees receive 25 days per year..."</span>),
+]
+dataset = Dataset.from_list(pairs)
+dataset.to_json(<span class="str">"train_data.jsonl"</span>)
+    </div>
+
+    <h3>Tokenisation: The Critical Detail Engineers Miss</h3>
+    <p>
+      You must use <strong>the exact tokeniser that was used to pre-train your base model</strong>. LLaMA uses a SentencePiece-based BPE tokeniser; Mistral uses the same. BERT uses WordPiece. Mixing tokenisers — even between models that look similar — is a silent catastrophe that produces garbage training gradients without throwing an error.
+    </p>
+
+    <div class="callout warn">
+      <p><strong>Tokeniser mismatch</strong> is one of the most common silent failures in enterprise fine-tuning projects. The training loop will complete without errors, evaluation loss will look reasonable, and the model will hallucinate confidently on every deployment query. Always verify: <code>tokenizer.name_or_path</code> must match your base model exactly.</p>
+    </div>
+
+    <h3>Splitting, Validation, and Compliance</h3>
+    <p>
+      Use an 80/10/10 train/validation/test split with <strong>strict non-overlap enforcement</strong>. Data leakage — where validation or test examples contaminate the training set — is one of the most common causes of overfit models that fail in production. Hash every example; deduplicate across splits before training begins.
+    </p>
+    <p>
+      On the compliance side: all PII must be anonymised or removed before data enters any training pipeline. Depending on your jurisdiction, GDPR Article 17 ("right to erasure") may require you to delete a user's data from a trained model — which is technically non-trivial. The pragmatic solution is aggressive pre-training anonymisation so that no PII is ever ingested.
+    </p>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section class="section" id="peft">
+    <div class="section-label">// Section 05</div>
+    <h2>PEFT: LoRA & QLoRA — Fine-Tuning Without a Supercomputer</h2>
+
+    <p>
+      Full fine-tuning of a 7B model updates all 7 billion parameters, requires ~70 GB of VRAM, and costs $5,000–$10,000 per run on A100 hardware. This puts fine-tuning out of reach for most organisations. <strong>Parameter-Efficient Fine-Tuning (PEFT)</strong> changes the economics radically.
+    </p>
+
+    <h3>LoRA: Low-Rank Adaptation</h3>
+    <p>
+      LoRA operates on the insight that weight updates during fine-tuning have a low intrinsic rank — meaning they live in a much smaller subspace than the full weight matrix. Instead of computing ΔW directly, LoRA decomposes it:
+    </p>
+
+    <div class="code-block">
+      <span class="lang-tag">Math → Code</span>
+<span class="cm"># LoRA core formula:  W_new = W_0 + ΔW = W_0 + B·A
+# W_0: frozen pre-trained weights (4096×4096 = 16.7M params)
+# B: trainable (4096×r)
+# A: trainable (r×4096)
+# With r=8: (4096×8) + (8×4096) = 65,536 params  ← 99.6% reduction</span>
+
+<span class="kw">from</span> peft <span class="kw">import</span> LoraConfig, get_peft_model, TaskType
+
+lora_config = LoraConfig(
+    task_type=TaskType.CAUSAL_LM,
+    r=<span class="num">8</span>,               <span class="cm"># rank — lower = more efficient, less expressive</span>
+    lora_alpha=<span class="num">16</span>,     <span class="cm"># scaling: effective scale = alpha/r = 2.0</span>
+    lora_dropout=<span class="num">0.1</span>,  <span class="cm"># regularisation for small datasets</span>
+    target_modules=[<span class="str">"q_proj"</span>, <span class="str">"v_proj"</span>],  <span class="cm"># query & value attention matrices</span>
+    bias=<span class="str">"none"</span>
+)
+
+model = get_peft_model(base_model, lora_config)
+model.print_trainable_parameters()
+<span class="cm"># → trainable params: 4,194,304 || all params: 6,738,415,616
+#   trainable %: 0.0623</span>
+    </div>
+
+    <h3>QLoRA: When You Only Have a Consumer GPU</h3>
+    <p>
+      QLoRA adds 4-bit NormalFloat (NF4) quantisation of the frozen base weights on top of LoRA. This reduces a 65B model from ~130 GB to ~48 GB — making it feasible on a single A100. For 7B models, QLoRA runs on an RTX 3090 with 24 GB VRAM.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Trainable Params</th><th>VRAM (7B)</th><th>Cost/Run</th><th>Performance vs Full FT</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Full Fine-Tuning</td><td>7B (100%)</td><td>~70 GB</td><td>$5K–$10K</td><td>100% baseline</td></tr>
+          <tr><td>LoRA (r=8)</td><td>~65M (0.1%)</td><td>~20 GB</td><td>$500–$1K</td><td>95–98%</td></tr>
+          <tr><td>QLoRA (4-bit + LoRA)</td><td>~65M (0.1%)</td><td>~12 GB</td><td>$300–$600</td><td>93–97%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p>For most enterprise chatbot use cases, <strong>QLoRA delivers a 93–97% performance ceiling at 3–5% of the full fine-tuning cost</strong>. The remaining 3–7% performance gap is rarely observable in production — users cannot distinguish a model that achieves 96% vs 100% on academic benchmarks when answering real HR policy questions.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 6 -->
+  <section class="section" id="rag">
+    <div class="section-label">// Section 06</div>
+    <h2>RAG Pipelines: Grounding Your Chatbot in Real Knowledge</h2>
+
+    <p>
+      Fine-tuning teaches the model <em>how</em> to answer in your domain. <strong>Retrieval-Augmented Generation (RAG)</strong> gives it access to <em>what</em> to answer from — your live knowledge base, updated daily, without retraining. This is the architecture that separates enterprise chatbots from toy demos.
+    </p>
+
+    <h3>The Two-Phase RAG Architecture</h3>
+    <p>
+      RAG operates in two phases: an <strong>offline ingestion phase</strong> that processes your document corpus into a vector database, and an <strong>online query phase</strong> that retrieves relevant chunks at runtime before passing them to the LLM.
+    </p>
+
+    <div class="code-block">
+      <span class="lang-tag">Python · LangChain RAG Pipeline</span>
+<span class="kw">from</span> langchain.text_splitter <span class="kw">import</span> RecursiveCharacterTextSplitter
+<span class="kw">from</span> langchain.embeddings <span class="kw">import</span> OpenAIEmbeddings
+<span class="kw">from</span> langchain.vectorstores <span class="kw">import</span> Pinecone
+<span class="kw">from</span> langchain.chains <span class="kw">import</span> RetrievalQA
+
+<span class="cm"># ── Offline: Ingest Documents ──────────────────────────────</span>
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=<span class="num">512</span>,       <span class="cm"># tokens per chunk</span>
+    chunk_overlap=<span class="num">50</span>,     <span class="cm"># overlap prevents context loss at boundaries</span>
+    separators=[<span class="str">"\n\n"</span>, <span class="str">"\n"</span>, <span class="str">" "</span>]
+)
+chunks = splitter.split_documents(raw_docs)
+embeddings = OpenAIEmbeddings(model=<span class="str">"text-embedding-ada-002"</span>)
+vectorstore = Pinecone.from_documents(chunks, embeddings,
+                                       index_name=<span class="str">"hr-knowledge-base"</span>)
+
+<span class="cm"># ── Online: Query Pipeline ─────────────────────────────────</span>
+retriever = vectorstore.as_retriever(
+    search_type=<span class="str">"similarity"</span>,
+    search_kwargs={<span class="str">"k"</span>: <span class="num">5</span>}   <span class="cm"># top-5 most relevant chunks</span>
+)
+qa_chain = RetrievalQA.from_chain_type(
+    llm=local_llm,          <span class="cm"># your fine-tuned Ollama model</span>
+    retriever=retriever,
+    return_source_documents=<span class="kw">True</span>
+)
+response = qa_chain({<span class="str">"query"</span>: <span class="str">"What is our work-from-home policy?"</span>})
+    </div>
+
+    <h3>Why RAG Beats Knowledge-Embedded Fine-Tuning</h3>
+    <ul class="styled">
+      <li><strong>Recency</strong> — Policy changes, product updates, and org restructuring are reflected in the knowledge base on the next ingestion cycle. No retraining required.</li>
+      <li><strong>Auditability</strong> — Every response can be traced to specific source documents. The model cites its sources; compliance teams can audit the chain of reasoning.</li>
+      <li><strong>Reduced Hallucination</strong> — An LLM grounded in retrieved, verified documents is significantly less likely to confabulate plausible-sounding but incorrect answers.</li>
+      <li><strong>Scalability</strong> — Your knowledge base can grow to millions of documents without retraining. The embedding index scales horizontally; the model does not.</li>
+    </ul>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="section" id="roadmap">
+    <div class="section-label">// Section 07</div>
+    <h2>The Six-Phase Build Roadmap</h2>
+    <p>
+      Below is the practitioner-tested sequence for taking an enterprise AI chatbot from concept to production. Each phase has hard entry criteria — do not proceed to the next until the current phase's outputs are validated.
+    </p>
+
+    <div class="roadmap">
+
+      <!-- Phase 1 -->
+      <div class="roadmap-item">
+        <div class="rm-node-col">
+          <div class="rm-node phase-1">01</div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <div class="rm-phase">Phase 1 · Weeks 1–2</div>
+          <div class="rm-title">Foundation: Requirements, Model Selection & Infrastructure</div>
+          <p class="rm-desc">
+            Define use cases with business stakeholders. Select the base model (7B for internal Q&A, 13B for nuanced reasoning, 70B for complex legal/medical). Provision hardware — local GPU servers or cloud GPU instances. Install the baseline stack: CUDA drivers, PyTorch, Ollama, Docker. Establish version control for all model artefacts and data pipelines from day one.
+          </p>
+          <div class="rm-tags">
+            <span class="tag t-red">Use Case Scoping</span>
+            <span class="tag t-red">Model Selection Matrix</span>
+            <span class="tag t-red">GPU Provisioning</span>
+            <span class="tag t-red">Ollama + Docker Setup</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="roadmap-item">
+        <div class="rm-node-col">
+          <div class="rm-node phase-2">02</div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <div class="rm-phase">Phase 2 · Weeks 3–5</div>
+          <div class="rm-title">Data Engineering: Collection, Cleaning & Formatting</div>
+          <p class="rm-desc">
+            Inventory all internal data sources — SharePoint, Confluence, CRM, ticketing systems, product docs. Extract, clean (remove PII, deduplicate, normalise), and structure into Q&A pairs and document chunks. Build the 80/10/10 train/validation/test split with hash-based deduplication. Conduct GDPR/HIPAA compliance review before any data enters the pipeline. Target minimum 1,000 high-quality examples before proceeding.
+          </p>
+          <div class="rm-tags">
+            <span class="tag t-blue">ETL Pipeline</span>
+            <span class="tag t-blue">PII Anonymisation</span>
+            <span class="tag t-blue">Q&A Pair Generation</span>
+            <span class="tag t-blue">Compliance Review</span>
+            <span class="tag t-blue">Hugging Face Datasets</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="roadmap-item">
+        <div class="rm-node-col">
+          <div class="rm-node phase-3">03</div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <div class="rm-phase">Phase 3 · Weeks 5–7</div>
+          <div class="rm-title">Fine-Tuning: LoRA/QLoRA with Hyperparameter Optimisation</div>
+          <p class="rm-desc">
+            Apply LoRA or QLoRA to your base model. Start with: <code>r=8</code>, <code>lora_alpha=16</code>, <code>lr=2e-5</code>, <code>3 epochs</code>. Monitor training loss and validation loss curves simultaneously — divergence is early overfitting. Run systematic hyperparameter search (grid or Bayesian). Validate against your held-out test set using perplexity, domain-specific accuracy, and human evaluation by subject-matter experts. Document every experiment.
+          </p>
+          <div class="rm-tags">
+            <span class="tag t-green">LoRA / QLoRA</span>
+            <span class="tag t-green">PEFT Library</span>
+            <span class="tag t-green">HF Trainer</span>
+            <span class="tag t-green">Perplexity Eval</span>
+            <span class="tag t-green">Weights &amp; Biases</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="roadmap-item">
+        <div class="rm-node-col">
+          <div class="rm-node phase-4">04</div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <div class="rm-phase">Phase 4 · Weeks 7–9</div>
+          <div class="rm-title">RAG Pipeline: Vector Database, Embeddings & Retrieval</div>
+          <p class="rm-desc">
+            Ingest your document corpus into a vector database (Pinecone for managed production, Chroma/Milvus for self-hosted). Use <code>text-embedding-ada-002</code> or a local alternative (e.g., <code>nomic-embed-text</code> via Ollama) for embeddings. Configure chunking: 512-token chunks with 50-token overlap. Build the retrieval chain with LangChain. Test retrieval quality independently before wiring to the LLM — bad retrieval poisons good generation.
+          </p>
+          <div class="rm-tags">
+            <span class="tag t-gold">Pinecone / Chroma</span>
+            <span class="tag t-gold">LangChain</span>
+            <span class="tag t-gold">Embedding Models</span>
+            <span class="tag t-gold">Semantic Chunking</span>
+            <span class="tag t-gold">Retrieval Eval</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="roadmap-item">
+        <div class="rm-node-col">
+          <div class="rm-node phase-5">05</div>
+          <div class="rm-line"></div>
+        </div>
+        <div class="rm-content">
+          <div class="rm-phase">Phase 5 · Weeks 9–11</div>
+          <div class="rm-title">Deployment: Flask API, Docker, Kubernetes & Monitoring</div>
+          <p class="rm-desc">
+            Build a production REST API (Flask or FastAPI) with <code>/health</code> and <code>/chat</code> endpoints. Containerise with Docker. Configure Kubernetes for autoscaling based on CPU/memory thresholds. Integrate <code>ollama</code> or <code>llama.cpp</code> as the inference backend. Implement input validation, rate limiting (Flask-Limiter), structured logging (JSON logs to ELK or Loki), and Prometheus + Grafana for metrics dashboards. Set alerts for latency P95 &gt; 3s, error rate &gt; 1%, GPU memory &gt; 90%.
+          </p>
+          <div class="rm-tags">
+            <span class="tag t-purple">FastAPI / Flask</span>
+            <span class="tag t-purple">Docker</span>
+            <span class="tag t-purple">Kubernetes</span>
+            <span class="tag t-purple">Prometheus</span>
+            <span class="tag t-purple">Grafana</span>
+            <span class="tag t-purple">Ollama / llama.cpp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 6 -->
+      <div class="roadmap-item">
+        <div class="rm-node-col">
+          <div class="rm-node phase-6">06</div>
+          <div class="rm-line" style="background:transparent;"></div>
+        </div>
+        <div class="rm-content">
+          <div class="rm-phase">Phase 6 · Ongoing</div>
+          <div class="rm-title">Security, RBAC, Compliance & Retraining Lifecycle</div>
+          <p class="rm-desc">
+            Implement OAuth 2.0 + SSO, role-based access control (RBAC with least-privilege), TLS 1.3 end-to-end encryption, and immutable audit logging (WORM storage). Establish automated bias detection and fairness audits. Build MLOps retraining pipelines that trigger on data drift detection or scheduled intervals. Maintain model version control with rollback capability. Conduct regular penetration testing and security assessments.
+          </p>
+          <div class="rm-tags">
+            <span class="tag t-red">OAuth 2.0 / SSO</span>
+            <span class="tag t-red">RBAC</span>
+            <span class="tag t-red">Audit Logging</span>
+            <span class="tag t-red">MLOps / Retraining</span>
+            <span class="tag t-red">Bias Detection</span>
+            <span class="tag t-red">Pen Testing</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 8 -->
+  <section class="section" id="security">
+    <div class="section-label">// Section 08</div>
+    <h2>Security, RBAC, Compliance, and Maintenance</h2>
+
+    <p>
+      A chatbot that exposes employee payroll data to an intern because someone forgot to scope the API context is not an AI failure — it is an engineering failure. Security cannot be bolted on post-deployment; it must be architected from the first design review.
+    </p>
+
+    <h3>The Role-Based Access Control (RBAC) Matrix</h3>
+    <p>
+      Every enterprise chatbot should implement a formal RBAC policy. Below is a representative permission matrix — adapt for your organisation:
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Role</th><th>HR Records</th><th>Knowledge Base</th><th>Training Data</th><th>Model Config</th><th>Audit Trails</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>End-User</td><td class="cross">✗ None</td><td class="check">✓ Read</td><td class="cross">✗ None</td><td class="cross">✗ None</td><td class="cross">✗ None</td></tr>
+          <tr><td>HR Specialist</td><td>Read (dept. only)</td><td class="check">✓ Read</td><td class="cross">✗ None</td><td class="cross">✗ None</td><td>Read</td></tr>
+          <tr><td>Data Scientist</td><td>Read</td><td>Read + Write</td><td class="check">✓ Read + Write</td><td>Read + Write</td><td>Read</td></tr>
+          <tr><td>Compliance Officer</td><td class="cross">✗ None</td><td>Read</td><td class="cross">✗ None</td><td class="cross">✗ None</td><td>Full Read</td></tr>
+          <tr><td>Chatbot Admin</td><td class="cross">✗ None</td><td>Read + Write</td><td class="cross">✗ None</td><td>Read + Write</td><td>Read + Delete</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The Continuous Retraining Imperative</h3>
+    <p>
+      Static models decay. <strong>Data drift</strong> — statistical shifts in user query patterns — and <strong>concept drift</strong> — changes in the underlying relationships the model predicts — are both inevitable. An HR chatbot trained on 2024 policies will confidently give wrong answers after 2025 policy updates unless it is retrained.
+    </p>
+    <p>
+      Build automated monitoring that triggers retraining when: (a) validation accuracy drops below threshold, (b) embedding distribution of incoming queries drifts significantly from training distribution (measured by KL divergence or MMD), or (c) a scheduled calendar interval passes. Use A/B shadow deployment to validate retrained models before full rollout.
+    </p>
+  </section>
+
+  <!-- SECTION 9 -->
+  <section class="section" id="kpis">
+    <div class="section-label">// Section 09</div>
+    <h2>Production KPIs & Evaluation Framework</h2>
+
+    <p>
+      You need quantitative targets before you deploy, not after. Here is the KPI framework for an enterprise chatbot at maturity:
+    </p>
+
+    <div class="metrics">
+      <div class="metric-card"><div class="value">&gt;95%</div><div class="label">Intent Accuracy</div><div class="sublabel">Correctly classify user query type</div></div>
+      <div class="metric-card"><div class="value">&gt;90%</div><div class="label">Response Correctness</div><div class="sublabel">Factual accuracy vs. ground truth</div></div>
+      <div class="metric-card"><div class="value">&gt;80%</div><div class="label">Automation Rate</div><div class="sublabel">Queries resolved without human escalation</div></div>
+      <div class="metric-card"><div class="value">&lt;3s</div><div class="label">P50 Response Time</div><div class="sublabel">User-facing latency target</div></div>
+      <div class="metric-card"><div class="value">&lt;10%</div><div class="label">Escalation Rate</div><div class="sublabel">Conversations routed to humans</div></div>
+      <div class="metric-card"><div class="value">&gt;4.5/5</div><div class="label">CSAT Score</div><div class="sublabel">Post-session user satisfaction</div></div>
+    </div>
+
+    <p>
+      Track these with a combination of automated test suites (regression tests on golden QA pairs run on every deployment), passive production monitoring (log all queries, responses, and implicit feedback signals), and periodic human evaluation by domain experts (monthly sampling of 100 random conversations, scored blind).
+    </p>
+  </section>
+
+  <!-- SECTION 10 -->
+  <section class="section" id="pitfalls">
+    <div class="section-label">// Section 10</div>
+    <h2>Common Pitfalls Engineers Fall Into</h2>
+
+    <div class="callout warn">
+      <p><strong>Catastrophic Forgetting.</strong> Fine-tuning a narrow domain dataset can erase the model's broad pre-trained capabilities. PEFT (LoRA/QLoRA) mitigates this significantly because the base weights remain frozen. If you must full-fine-tune, mix general-purpose data at an 80/20 ratio with your domain data and keep the learning rate below 5e-5.</p>
+    </div>
+
+    <div class="callout warn">
+      <p><strong>Overfitting to Training Examples.</strong> Classic signs: training accuracy 99%, validation accuracy 62%. Fixes: increase dataset size (target &gt;1,000 high-quality examples), add dropout to LoRA layers (<code>lora_dropout=0.1</code>), use weight decay (<code>0.01</code>), implement early stopping on validation loss. Do not just add more epochs — that is the wrong direction.</p>
+    </div>
+
+    <div class="callout warn">
+      <p><strong>Ignoring Retrieval Quality Before LLM Integration.</strong> Engineers wire up the full RAG pipeline and then wonder why answers are wrong. Evaluate your retriever in isolation first: given a test query, do the top-5 retrieved chunks contain the correct information? Precision@5 should exceed 80% before you connect the LLM. Bad retrieval + good LLM = confident hallucination.</p>
+    </div>
+
+    <div class="callout warn">
+      <p><strong>Deploying Without Resource Limits.</strong> A single poorly optimised query can OOM a GPU container and crash inference for all concurrent users. Always set <code>--memory</code> and <code>--cpus</code> flags in Docker; set Kubernetes resource limits/requests; implement request queuing and circuit breakers. Test under load before production.</p>
+    </div>
+
+    <div class="callout warn">
+      <p><strong>Security as an Afterthought.</strong> Prompt injection — where a user's input manipulates the model into revealing system prompt content or executing unauthorised actions — is a real attack vector. Implement input sanitisation, output filtering, and context isolation at the application layer. Your LLM's safety training is not a security control; it is a probabilistic behaviour.</p>
+    </div>
+
+    <div class="ornamental-hr">✦ ✦ ✦</div>
+
+    <div class="pullquote">
+      The gap between a demo and a production enterprise chatbot is not intelligence — it is engineering. Infrastructure, data quality, security, and observability are what determine whether your chatbot earns the trust of the people who use it every day.
+    </div>
+
+    <h3>Where to Go From Here</h3>
+    <p>
+      This post has covered the conceptual and technical depth required to architect and build an enterprise AI chatbot from the ground up. The natural next steps for any team taking this seriously:
+    </p>
+    <ol class="styled">
+      <li>Stand up a local Ollama instance and benchmark a 7B model against your use case before committing to hardware.</li>
+      <li>Run a data audit — map every internal knowledge source and estimate the volume of clean, structured training examples you can extract.</li>
+      <li>Run a LoRA fine-tuning experiment on a 1,000-example pilot dataset. Validate with domain experts before scaling.</li>
+      <li>Build the RAG pipeline in isolation. Evaluate retrieval quality independently. Integrate the LLM only when retrieval is solid.</li>
+      <li>Containerise, monitor, and load test before any end-user exposure. Define your rollback procedure before you deploy.</li>
+    </ol>
+
+    <p style="margin-top:32px;">
+      Building reliable AI systems is hard engineering work. The organisations that do it well — with rigorous data pipelines, principled fine-tuning, robust retrieval, and serious security — will have systems that compound in value over time. The ones that treat it as a prompt-engineering project will have expensive technical debt and user trust deficits that are very difficult to recover from.
+    </p>
+    <p>
+      Build it right the first time.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>Deep Tech Review</strong> · Advanced AI Engineering · May 2026 &nbsp;|&nbsp;
+    Based on enterprise AI training curriculum by Dr. Suhaila M.A. Musa, University of Gezira &amp; Innovation Biomedical Company LLC &nbsp;|&nbsp;
+    Stack references: Meta LLaMA, Mistral AI, Hugging Face PEFT, LangChain, Ollama, llama.cpp, Pinecone, Docker, Kubernetes
+  </p>
+</footer>
+
+</body>
+</html>
